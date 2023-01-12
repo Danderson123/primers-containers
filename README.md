@@ -40,7 +40,7 @@ scp -r ~/Documents/primers-containers/task/minimap2.img <EBI USERNAME>@codon-log
 
 ### Executing the container
 
-Now we have build the container, let's test it out by mapping some *Mycobacterium tuberculosis* Nanopore reads to a reference sequence and output a SAM alignment file. We can do this like so:
+Now we have build the container, let's test it out by mapping some SARS-CoV-2 Nanopore reads to a reference sequence and output a SAM alignment file. We can do this like so:
 ```{bash}
-singularity run task/minimap2.img task/Mtb_reference_genome.fa task/Mtb_nanopore_reads.fq.gz > task/Mtb_alignment.sam
+singularity run task/minimap2.img task/MN908947.3.fasta task/ERR5729799.fastq.gz > task/Mtb_alignment.sam
 ```
