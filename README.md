@@ -2,6 +2,10 @@
 
 Task for the Primers for Predocs containers session on 18th January 2023.
 
+## Singularity
+
+Singularity is a tool that allows us to create and run software containers and greatly improves the portability and reproducibility of our analyses.
+
 ## Setup
 
 1) Log into the virtual machine as described by the course instructions.
@@ -17,7 +21,7 @@ singularity --version
 docker --version
 ```
 
-## Task 1
+## Task
 
 ### Background
 
@@ -44,3 +48,15 @@ Now we have build the container, let's test it out by mapping some SARS-CoV-2 Na
 ```{bash}
 singularity run task/minimap2.img task/MN908947.3.fasta task/ERR5729799.fastq.gz > task/ERR5729799_mapped.sam
 ```
+
+## Bonus: Converting docker file to a singularity containers
+
+Now that we have seen how useful singularity containers can be in helping us make software containers without root privileges, let's see how we can convert a Docker container, which does need root privileges to build and run, to a singularity container.
+
+Unfortunately we cannot build a singularity container from a Dockerfile directly, but we can build one from a running docker container if we have root privileges like this:
+
+```{bash}
+docker build -t local/minimap2:latest bonus
+singularity build --force bonus/minimap2.img docker-daemon://local/minimap2:latest
+```
+
