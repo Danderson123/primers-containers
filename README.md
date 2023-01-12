@@ -49,7 +49,7 @@ Now we have build the container, let's test it out by mapping some SARS-CoV-2 Na
 singularity run task/minimap2.img task/MN908947.3.fasta task/ERR5729799.fastq.gz > task/ERR5729799_mapped.sam
 ```
 
-## Bonus: Converting docker file to a singularity containers
+## Bonus: Converting a Dockerfile to a singularity container
 
 Now that we have seen how useful singularity containers can be in helping us make software containers without root privileges, let's see how we can convert a Docker container, which does need root privileges to build and run, to a singularity container.
 
