@@ -31,9 +31,9 @@ The software we want to include in our container is often specified by writing a
 
 We can then build the singularity container using:
 ```{bash}
-sudo singularity build --force task/minimap2.img task/minimap2.def
+singularity build --fakeroot --force task/minimap2.img task/minimap2.def
 ```
-As you will notice, we need root privileges to build (but not execute) the container, which we cannot do on the cluster. Instead, we have to build the container locally and transfer it to the cluster using:
+Fortunately, we no longer need root privileges to build the container so can build containers on the cluster. If you already had a container built locally though, you can transfer it to the cluster using:
 ```{bash}
 scp -r ~/Documents/primers-containers/task/minimap2.img <EBI USERNAME>@codon-login.ebi.ac.uk:~
 ```
@@ -42,5 +42,5 @@ scp -r ~/Documents/primers-containers/task/minimap2.img <EBI USERNAME>@codon-log
 
 Now we have build the container, let's test it out by mapping some *Mycobacterium tuberculosis* Nanopore reads to a reference sequence and output a SAM alignment file. We can do this like so:
 ```{bash}
-singularity run task/minimap2.img task/reference_genome.fa task/nanopore_reads.fq.gz > task/alignment.sam
+singularity run task/minimap2.img task/Mtb_reference_genome.fa task/Mtb_nanopore_reads.fq.gz > task/Mtb_alignment.sam
 ```
