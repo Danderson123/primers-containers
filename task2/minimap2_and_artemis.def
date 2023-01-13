@@ -29,7 +29,7 @@ From: ubuntu:20.04
     bash miniconda.sh -b -p /opt/miniconda
 
     # initialise conda
-    source /opt/miniconda/bin/activate
+    . ./opt/miniconda/bin/activate
     conda init bash
 
     #install conda enivonment.yml file and Artemis
