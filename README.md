@@ -57,6 +57,6 @@ Unfortunately we cannot build a singularity container from a Dockerfile directly
 
 ```{bash}
 docker build -t local/minimap2:latest bonus
-singularity build --force bonus/minimap2.img docker-daemon://local/minimap2:latest
+sudo singularity build --force bonus/minimap2.img docker-daemon://local/minimap2:latest
 ```
 
