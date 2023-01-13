@@ -31,15 +31,14 @@ From: ubuntu:20.04
     # add the conda binary to our PATH
     export PATH="/opt/miniconda/bin:$PATH"
 
-    #install conda enivonment.yml file specifiying Artemis
-    conda env create -f environment.yml
-
-    # initialise the conda environment
-    conda init bash
+    #install conda enivonment.yml file and Artemis
+    /opt/miniconda/bin/conda env create -f environment.yml
 
     # Activate conda env
-    conda activate myenv
+    /opt/miniconda/bin/conda activate myenv
 
 %runscript
+    # activate the conda environment
+    /opt/miniconda/bin/conda activate myenv
     # run minimap2 or artemis when the container is executed
     exec "$@"
