@@ -20,7 +20,7 @@ From: ubuntu:20.04
     cd ${SINGULARITY_ROOTFS}/software
 
     # download the minimap2 binary
-    curl -L https://github.com/lh3/minimap2/releases/download/v2.24/minimap2-2.24_x64-linux.tar.bz2 | tar --no-same-owner -jxvf -
+    curl -L https://github.com/lh3/minimap2/releases/download/v2.24/minimap2-2.24_x64-linux.tar.bz2 | tar --no-sam>
 
     # install the latest miniconda
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
@@ -30,12 +30,16 @@ From: ubuntu:20.04
     conda update conda
     . /opt/conda/etc/profile.d/conda.sh
 
+    # add conda to PATH
+    echo 'export PATH=$PATH:/opt/conda/bin' >> $SINGULARITY_ENVIRONMENT
+
     #install conda enivonment.yml file and Artemis
     conda env create -f environment.yml -p /opt/conda/envs/$ENV_NAME
     conda clean --all
 
     # Activate conda env
     conda activate myenv
+
 
 %runscript
     # activate the conda environment
