@@ -37,14 +37,14 @@ We can then build the singularity container using:
 ```{bash}
 singularity build --fakeroot --force task/minimap2.img task/minimap2.def
 ```
-Fortunately, we no longer need root privileges to build the container so can build containers on the cluster. If you already had a container built locally though, you can transfer it to the cluster using:
+Fortunately, we no longer need root privileges to build the container so can do this on the cluster. If you already had a container built locally though, you can transfer it to the cluster using:
 ```{bash}
 scp -r ~/Documents/primers-containers/task/minimap2.img <EBI USERNAME>@codon-login.ebi.ac.uk:~
 ```
 
 ### Executing the container
 
-Now we have build the container, let's test it out by mapping some SARS-CoV-2 Nanopore reads to a reference sequence and output a SAM alignment file. We can do this like so:
+Now we have built the container, let's test it out by mapping some SARS-CoV-2 Nanopore reads to a reference sequence and output a SAM alignment file. We can do this like so:
 ```{bash}
 singularity run task/minimap2.img task/MN908947.3.fasta task/ERR5729799.fastq.gz > task/ERR5729799_mapped.sam
 ```
