@@ -61,7 +61,7 @@ Artemis is available through conda so we will install this in our container firs
 
 Let's build the singularity container like this:
 ```{bash}
-singularity build --fakeroot --force task2/minimap2_and_artemis.img task2/minimap2_and_artemis.def
+singularity build --fakeroot task2/minimap2_and_artemis.img task2/minimap2_and_artemis.def
 ```
 
 ### Executing the container
