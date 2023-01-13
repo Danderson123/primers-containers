@@ -1,0 +1,23 @@
+Bootstrap: library
+From: ubuntu:20.04
+
+%setup
+    # make a directory to store the minimap2 binary
+    mkdir ${SINGULARITY_ROOTFS}/minimap2
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    # apt-get install curl and tar
+    apt-get update
+    apt-get install -y curl \
+            tar
+
+    # enter the minimap2 directory
+    cd ${SINGULARITY_ROOTFS}/minimap2
+
+    # download the minimap2 binary
+    curl -L https://github.com/lh3/minimap2/releases/download/v2.24/minimap2-2.24_x64-linux.tar.bz2 | tar --no-same-owner -jxvf -
+
+%runscript
+    # run minimap2 whenever the container is executed
+    ${SINGULARITY_ROOTFS}/minimap2/minimap2-2.24_x64-linux/minimap2 "$@"

@@ -1,0 +1,45 @@
+Bootstrap: library
+From: ubuntu:20.04
+
+%setup
+    # make a directory to store the minimap2 binary
+    mkdir ${SINGULARITY_ROOTFS}/software
+
+%files
+    task2/environment.yml software/
+%post
+    export DEBIAN_FRONTEND=noninteractive
+
+    # apt-get install curl, tar and wget
+    apt-get update
+    apt-get install -y curl \
+            tar \
+            wget
+
+    # enter the software directory
+    cd ${SINGULARITY_ROOTFS}/software
+
+    # download the minimap2 binary
+    curl -L https://github.com/lh3/minimap2/releases/download/v2.24/minimap2-2.24_x64-linux.tar.bz2 | tar --no-same-owner -jxvf -
+
+    # install the latest miniconda
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+
+    #install conda
+    bash miniconda.sh -b -p /opt/miniconda
+
+    # add the conda binary to our PATH
+    export PATH="/opt/miniconda/bin:$PATH"
+
+    #install conda enivonment.yml file specifiying Artemis
+    conda env create -f environment.yml
+
+    # initialise the conda environment
+    conda init bash
+
+    # Activate conda env
+    conda activate myenv
+
+%runscript
+    # run minimap2 or artemis when the container is executed
+    exec "$@"
