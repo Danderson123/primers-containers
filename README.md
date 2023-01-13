@@ -21,7 +21,7 @@ singularity --version
 docker --version
 ```
 
-## Task
+## Task 1
 
 ### Background
 
@@ -29,24 +29,50 @@ docker --version
 
 ### Defining the singularity container
 
-The software we want to include in our container is often specified by writing a singularity recipe as a module definition file ending with `.def`. [task/minimap2.def](https://github.com/Danderson123/primers-containers/blob/master/task/minimap2-recipe.def) is a recipe I have written to install minimap2 in a singularity container. Singularity containers are essentially completely bare instances of the specified operating system, so we have to specify every programme that we will need to install the software we want to put in our container. We will be downloading `curl` and `tar` so we can download and expand the binary.
+The software we want to include in our container is often specified by writing a singularity recipe as a module definition file ending with `.def`. [task1/minimap2.def](https://github.com/Danderson123/primers-containers/blob/master/task1/minimap2-recipe.def) is a recipe I have written to install minimap2 in a singularity container. Singularity containers are essentially completely bare instances of the specified operating system, so we have to specify every programme that we will need to install the software we want to put in our container. We will be downloading `curl` and `tar` so we can download and expand the binary.
 
 ### Building the singularity container
 
 We can then build the singularity container using:
 ```{bash}
-singularity build --fakeroot --force task/minimap2.img task/minimap2.def
+singularity build --fakeroot --force task1/minimap2.img task1/minimap2.def
 ```
 Fortunately, we no longer need root privileges to build the container so can do this on the cluster. If you already had a container built locally though, you can transfer it to the cluster using:
 ```{bash}
-scp -r ~/Documents/primers-containers/task/minimap2.img <EBI USERNAME>@codon-login.ebi.ac.uk:~
+scp -r ~/Documents/primers-containers/task1/minimap2.img <EBI USERNAME>@codon-login.ebi.ac.uk:~
 ```
 
 ### Executing the container
 
 Now we have built the container, let's test it out by mapping some SARS-CoV-2 Nanopore reads to a reference sequence and output a SAM alignment file. We can do this like so:
 ```{bash}
-singularity run task/minimap2.img task/MN908947.3.fasta task/ERR5729799.fastq.gz > task/ERR5729799_mapped.sam
+singularity run task1/minimap2.img data/MN908947.3.fasta data/ERR5729799.fastq.gz > task1/ERR5729799_mapped.sam
+```
+
+## Task 2
+
+### Background
+
+Containers become even more convenient when you realise we can install multiple pieces of software in a single container. To demonstrate this I have written a second singularity recipe that installs minimap2 like before, but now also installs Artemis, a tool we can use to visualise how well the Nanopore reads map to the reference.
+
+### Building the singularity container
+
+Artemis is available through conda so we will install this in our container first, then use conda to install Artemis.
+
+Let's build the singularity container like this:
+```{bash}
+singularity build --fakeroot --force task2/minimap2_and_artemis.img task2/minimap2_and_artemis.def
+```
+
+### Executing the container
+
+To map the Nanopore reads we can run:
+```{bash}
+singularity run task2/minimap2_and_artemis.img minimap2 data/MN908947.3.fasta data/ERR5729799.fastq.gz > task1/ERR5729799_mapped.sam
+```
+The to run artemis:
+```{bash}
+singularity run task2/minimap2_and_artemis.img art
 ```
 
 ## Bonus: Converting a Dockerfile to a singularity container
@@ -59,4 +85,3 @@ Unfortunately we cannot build a singularity container from a Dockerfile directly
 docker build -t local/minimap2:latest bonus
 sudo singularity build --force bonus/minimap2.img docker-daemon://local/minimap2:latest
 ```
-
