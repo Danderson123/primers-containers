@@ -84,7 +84,7 @@ We now need to index the BAM with Samtools:
 ```{bash}
 singularity run task2/minimap2_and_artemis.img samtools index task2/ERR5729799_mapped.bam
 ```
-Then to run artemis:
+Then to run Artemis:
 ```{bash}
 singularity run task2/minimap2_and_artemis.img art
 ```
