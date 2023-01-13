@@ -39,7 +39,7 @@ singularity build --fakeroot --force task1/minimap2.img task1/minimap2.def
 ```
 Fortunately, we no longer need root privileges to build the container so can do this on the cluster. If you already had a container built locally though, you can transfer it to the cluster using:
 ```{bash}
-scp -r ~/Documents/primers-containers/task1/minimap2.img <EBI USERNAME>@codon-login.ebi.ac.uk:~
+scp -r task1/minimap2.img <EBI USERNAME>@codon-login.ebi.ac.uk:~
 ```
 
 ### Executing the container
