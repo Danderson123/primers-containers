@@ -63,7 +63,7 @@ Containers become even more convenient when you realise we can install multiple 
 
 ### Building the singularity container
 
-Artemis is available through conda so we will install this in our container first, then use conda to install Artemis.
+Samtools is available through conda so we will install this in our container first, then use conda to install Artemis.
 
 Let's build the singularity container like this:
 ```{bash}
