@@ -28,6 +28,9 @@ From: ubuntu:20.04
     #install conda
     bash miniconda.sh -b -p /opt/miniconda
 
+    # initialise conda
+    /opt/miniconda/bin/conda init bash
+
     # add the conda binary to our PATH
     export PATH="/opt/miniconda/bin:$PATH"
 
