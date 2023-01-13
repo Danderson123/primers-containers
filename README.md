@@ -9,10 +9,16 @@ Singularity is a tool that allows us to create and run software containers and g
 ## Setup
 
 1) Log into the virtual machine as described by the course instructions.
-2) We need to download the scripts and data in this repository. No GitHub account should needed for this tutorial as this is a public repository. You can do this by opening the Terminal and running:
+2) The scripts and files for this session should already be available via Penelopeprime on your virtual machine. You will need to copy these to your machine using the following command:
 ```{bash}
 cd ~/Documents
-git checkout https://github.com/Danderson123/primers-containers
+cp -r /media/penelopeprime/Primer4PredocsJan23/primers-containers .
+cd primers-containers
+```
+If this is not the case or you want to try this tutorial on your own machine, you can get the data and scripts from the GitHub repository. No GitHub account should needed for this as it is a public repository. You can do this by opening the Terminal and running:
+```{bash}
+cd ~/Documents
+git clone https://github.com/Danderson123/primers-containers
 cd primers-containers
 ```
 3) Singularity and Docker should already be installed on your virtual machine. Please test these using:
