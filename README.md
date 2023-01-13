@@ -46,14 +46,14 @@ scp -r ~/Documents/primers-containers/task1/minimap2.img <EBI USERNAME>@codon-lo
 
 Now we have built the container, let's test it out by mapping some SARS-CoV-2 Nanopore reads to a reference sequence and output a SAM alignment file. We can do this like so:
 ```{bash}
-singularity run task1/minimap2.img data/MN908947.3.fasta data/ERR5729799.fastq.gz > task1/ERR5729799_mapped.sam
+singularity run task1/minimap2.img -a data/MN908947.3.fasta data/ERR5729799.fastq.gz > task1/ERR5729799_mapped.sam
 ```
 
 ## Task 2
 
 ### Background
 
-Containers become even more convenient when you realise we can install multiple pieces of software in a single container. To demonstrate this I have written a second singularity recipe that installs minimap2 like before, but now also installs Artemis, a tool we can use to visualise how well the Nanopore reads map to the reference.
+Containers become even more convenient when you realise we can install multiple pieces of software in a single container. To demonstrate this I have written a second singularity recipe that installs minimap2 like before, but now also installs Samtools and Artemis via Conda, 2 tools that we can use to visualise how well the Nanopore reads map to the reference. Samtools is a package we need to convert our SAM file to a BAM file that we can examine with Artemis.
 
 ### Building the singularity container
 
@@ -68,9 +68,17 @@ singularity build --fakeroot --force task2/minimap2_and_artemis.img task2/minima
 
 To map the Nanopore reads we can run:
 ```{bash}
-singularity run task2/minimap2_and_artemis.img minimap2 data/MN908947.3.fasta data/ERR5729799.fastq.gz > task1/ERR5729799_mapped.sam
+singularity run task2/minimap2_and_artemis.img minimap2 -a data/MN908947.3.fasta data/ERR5729799.fastq.gz > task2/ERR5729799_mapped.sam
 ```
-The to run artemis:
+Then to run Samtools to sort the SAM and make the BAM file:
+```{bash}
+singularity run task2/minimap2_and_artemis.img samtools sort task2/ERR5729799_mapped.sam > task2/ERR5729799_mapped.bam
+```
+We now need to index the BAM with Samtools:
+```{bash}
+singularity run task2/minimap2_and_artemis.img samtools index task2/ERR5729799_mapped.bam
+```
+Then to run artemis:
 ```{bash}
 singularity run task2/minimap2_and_artemis.img art
 ```
