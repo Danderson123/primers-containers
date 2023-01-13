@@ -26,20 +26,19 @@ From: ubuntu:20.04
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
 
     #install conda
-    bash miniconda.sh -b -p /opt/miniconda
-
-    # initialise conda
-    . ./opt/miniconda/bin/activate
-    conda init bash
+    bash miniconda.sh -bfp -p /opt/miniconda
+    conda update conda
+    . /opt/conda/etc/profile.d/conda.sh
 
     #install conda enivonment.yml file and Artemis
-    conda env create -f environment.yml
+    conda env create -f environment.yml -p /opt/conda/envs/$ENV_NAME
+    conda clean --all
 
     # Activate conda env
     conda activate myenv
 
 %runscript
     # activate the conda environment
-    /opt/miniconda/bin/conda activate myenv
+    conda activate myenv
     # run minimap2 or artemis when the container is executed
     exec "$@"
