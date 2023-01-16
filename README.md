@@ -35,9 +35,9 @@ docker --version
 
 ### Defining the singularity container
 
-The software we want to include in our container is often specified by writing a singularity recipe as a module definition file ending with `.def`. [task1/minimap2.def](https://github.com/Danderson123/primers-containers/blob/master/task1/minimap2-recipe.def) is a recipe I have written to install minimap2 in a singularity container. Singularity containers are essentially completely bare instances of the specified operating system, so we have to specify every programme that we will need to install the software we want to put in our container. We will be downloading `curl` and `tar` so we can download and expand the binary.
+The software we want to include in our container is often specified by writing a singularity recipe as a module definition file ending with `.def`. [task1/minimap2.def](https://github.com/Danderson123/primers-containers/blob/master/task1/minimap2-recipe.def) is a recipe I have written to install minimap2 in a singularity image. Singularity containers are essentially completely bare instances of the specified operating system, so we have to specify every programme that we will need to install the software we want to put in our container. We will be downloading `curl` and `tar` so we can download and expand the binary.
 
-### Building the singularity container
+### Building the singularity image
 
 We can then build the singularity container using:
 ```{bash}
@@ -45,12 +45,12 @@ singularity build --fakeroot --force task1/minimap2.img task1/minimap2.def
 ```
 Fortunately, we no longer need root privileges to build the container so can do this on the cluster. If you already had a container built locally though, you can transfer it to the cluster using:
 ```{bash}
-scp -r task1/minimap2.img <EBI USERNAME>@codon-login.ebi.ac.uk:~
+scp -r task1/minimap2.img <EBI username>@codon-login.ebi.ac.uk:~
 ```
 
 ### Executing the container
 
-Now we have built the container, let's test it out by mapping some SARS-CoV-2 Nanopore reads to a reference sequence and output a SAM alignment file. We can do this like so:
+Now we have built the image, let's test it out by mapping some SARS-CoV-2 Nanopore reads to a reference sequence and output a SAM alignment file. We can do this like so:
 ```{bash}
 singularity run task1/minimap2.img -a data/MN908947.3.fasta data/ERR5729799.fastq.gz > task1/ERR5729799_mapped.sam
 ```
@@ -59,13 +59,13 @@ singularity run task1/minimap2.img -a data/MN908947.3.fasta data/ERR5729799.fast
 
 ### Background
 
-Containers become even more convenient when you realise we can install multiple pieces of software in a single container. To demonstrate this I have written a second singularity recipe that installs minimap2 like before, but now also installs Samtools and Artemis via Conda, 2 tools that we can use to visualise how well the Nanopore reads map to the reference. Samtools is a package we need to convert our SAM file to a BAM file that we can examine with Artemis.
+Containers become even more convenient when you realise we can install multiple pieces of software in a single image. To demonstrate this I have written a second singularity recipe that installs minimap2 like before, but now also installs Samtools and Artemis via Conda, 2 tools that we can use to visualise how well the Nanopore reads map to the reference. Samtools is a package we need to convert our SAM file to a BAM file that we can examine with Artemis.
 
-### Building the singularity container
+### Building the singularity image
 
-Samtools is available through conda so we will install this in our container first, then use conda to install Artemis.
+Samtools is available through conda so we will install this in our image first, then use conda to install Artemis.
 
-Let's build the singularity container like this:
+Let's build the singularity image like this:
 ```{bash}
 singularity build --fakeroot task2/minimap2_and_artemis.img task2/minimap2_and_artemis.def
 ```
@@ -84,9 +84,26 @@ We now need to index the BAM with Samtools:
 ```{bash}
 singularity run task2/minimap2_and_artemis.img samtools index task2/ERR5729799_mapped.bam
 ```
-Then to run Artemis:
+Then to run artemis:
 ```{bash}
 singularity run task2/minimap2_and_artemis.img art
+```
+
+## Task 3
+
+### Background
+
+We do not actually need to repeat the building process everytime we want to build an image for a new tool available with a Singularity recipe. Singularity and Docker images are available, shareable and runnable from container registries. Container registries include:
+* [DockerHub](https://hub.docker.com/)
+* [SingularityHub](https://singularityhub.com/)
+* [quay.io](https://quay.io/)
+* [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
+* [Biocontainers](https://biocontainers.pro/registry)<sup>[1](https://academic.oup.com/bioinformatics/article/33/16/2580/3096437?login=true)</sup>: Builds and hosts a large number of containers for Bioinformatics tools. All tools available via the conda Bioconda channel will have a Biocontainer.
+
+## Running a remote container
+```{bash}
+img="docker://quay.io/biocontainers/samtools:1.14--hb421002_0"
+singularity -s exec "$img" samtools view -h task2/ERR5729799_mapped.bam
 ```
 
 ## Bonus: Converting a Dockerfile to a singularity container
