@@ -101,6 +101,8 @@ We do not actually need to repeat the building process everytime we want to buil
 * [Biocontainers](https://biocontainers.pro/registry)<sup>[1](https://academic.oup.com/bioinformatics/article/33/16/2580/3096437?login=true)</sup>: Builds and hosts a large number of containers for Bioinformatics tools. All tools available via the conda Bioconda channel will have a Biocontainer.
 
 ## Running a remote container
+
+Let's run a container for Samtools v1.14 available from the Quay container registry:
 ```{bash}
 img="docker://quay.io/biocontainers/samtools:1.14--hb421002_0"
 singularity -s exec "$img" samtools view -h task2/ERR5729799_mapped.bam
