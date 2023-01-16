@@ -118,3 +118,7 @@ Unfortunately we cannot build a singularity container from a Dockerfile directly
 docker build -t local/minimap2:latest bonus
 sudo singularity build --force bonus/minimap2.img docker-daemon://local/minimap2:latest
 ```
+
+## Additional resources
+
+For a much more in-depth tutorial, see Michael Hall's 2019 Singularity tutorial: https://github.com/mbhall88/eipp-2019-singularity#run-and-serving-applications
