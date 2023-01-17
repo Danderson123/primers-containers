@@ -59,7 +59,7 @@ singularity run task1/minimap2.img -a data/MN908947.3.fasta data/ERR5729799.fast
 
 ### Background
 
-Containers become even more convenient when you realise we can install multiple pieces of software in a single image. To demonstrate this I have written a second singularity recipe that installs minimap2 like before, but now also installs Samtools and Artemis via Conda, 2 tools that we can use to visualise how well the Nanopore reads map to the reference. Samtools is a package we need to convert our SAM file to a BAM file that we can examine with Artemis.
+Containers become even more convenient when you realise we can run multiple pieces of software from a single container. To demonstrate this I have written a second singularity recipe that installs minimap2 like before, but now also installs Samtools and Artemis via Conda, 2 tools that we can use to visualise how well the Nanopore reads map to the reference. Samtools is a package we need to convert our SAM file to a BAM file that we can examine with Artemis.
 
 ### Building the singularity image
 
