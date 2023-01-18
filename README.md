@@ -110,7 +110,7 @@ singularity -s exec "$img" samtools view -h task2/ERR5729799_mapped.bam
 
 ## Sandbox development of singularity images
 
-Developing Singularity containers can be frustrating at times as we have to rebuild a container every time we run into an error. To make our lives a bit easier, we can use Singularity's `--sandbox` option to speed up development. The Singularity sandbox mimics a container environment so that we can test commands we want to add to a container, preventing us from having to rebuild the container and saving us a lot of time. We can develop containers using sandbox using the commands below:
+Developing Singularity containers can be frustrating at times as we have to rebuild a container every time we run into an error. To make our lives a bit easier, we can use Singularity's `--sandbox` option to speed up development. The Singularity sandbox mimics a container environment so that we can test commands we want to add to a container, preventing us from having to rebuild a container and saving us a lot of time. We can develop containers using sandbox using the commands below:
 ```{bash}
 mkdir sandbox-dev
 cd sandbox-dev
