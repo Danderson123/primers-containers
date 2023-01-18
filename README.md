@@ -114,7 +114,7 @@ Developing Singularity containers can be frustrating at times as we have to rebu
 ```{bash}
 mkdir sandbox-dev
 cd sandbox-dev
-singularity build --fakeroot --sandbox <container name>
+singularity build --fakeroot --sandbox <container name> ../data/template.def
 ```
 To start an interactive shell within the container we run:
 ```{bash}
