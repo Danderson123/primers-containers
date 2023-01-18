@@ -108,6 +108,28 @@ img="docker://quay.io/biocontainers/samtools:1.14--hb421002_0"
 singularity -s exec "$img" samtools view -h task2/ERR5729799_mapped.bam
 ```
 
+## Sandbox development of singularity images
+
+Developing Singularity containers can be frustrating at times as we have to rebuild a container every time we run into an error. To make our lives a bit easier, we can use Singularity's `--sandbox` option to speed up development. The Singularity sandbox mimics a container environment so that we can test commands we want to add to a container, preventing us from having to rebuild the container and saving us a lot of time. We can develop containers using sandbox using the commands below:
+```{bash}
+mkdir sandbox-dev
+cd sandbox-dev
+singularity build --fakeroot --sandbox <container name>
+```
+To start an interactive shell within the container we run:
+```{bash}
+singularity shell --writable <container name>
+```
+The `--writable` option allows us to install software and save our changes to the container.
+
+We should now see our terminal update to:
+```{bash}
+Singularity playground:~>
+```
+**IMPORTANT:**
+**The `/root` directory on our local machine will be mounted in the sandbox, so we need to navigate away from this so we do not make any changes to the root directory of our machine by accident.**
+If we want to make a recipe (rather than just a container itself), we will need to manually copy and paste successful sandbox commands to a separate document.
+
 ## Bonus: Converting a Dockerfile to a singularity container
 
 Now that we have seen how useful singularity containers can be in helping us make software containers without root privileges, let's see how we can convert a Docker container, which does need root privileges to build and run, to a singularity container.
