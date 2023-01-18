@@ -42,5 +42,5 @@ From: ubuntu:20.04
     echo 'source /opt/conda/bin/activate myenv' >> $SINGULARITY_ENVIRONMENT
 
 %runscript
-    # run minimap2 or artemis when the container is executed
+    # run minimap2, samtools or artemis when the container is executed
     exec "$@"
