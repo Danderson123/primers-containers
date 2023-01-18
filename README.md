@@ -126,9 +126,6 @@ We should now see our terminal update to:
 ```{bash}
 Singularity playground:~>
 ```
-**IMPORTANT:**
-**The `/root` directory on our local machine will be mounted in the sandbox, so we need to navigate away from this so we do not make any changes to the root directory of our machine by accident.**
-
 If we want to make a recipe (rather than just a container itself), we will need to manually copy and paste successful sandbox commands to a separate document.
 
 ## Bonus: Converting a Dockerfile to a singularity container
